@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fähre → Setúbal">
+<meta name="theme-color" content="#ffffff">
+<title>Fähre → Setúbal</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f5;
+    --bg3: #ebebeb;
+    --accent: #326891;
+    --green: #1a7a3c;
+    --green-bg: #eaf5ee;
+    --green-border: #a8d9b8;
+    --green-text: #145c2d;
+    --text: #111111;
+    --text2: #444444;
+    --text3: #888888;
+    --border: #dddddd;
+    --next-bg: #e8f2fa;
+    --next-text: #1a4f6e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-width: 430px;
+    margin: 0 auto;
+  }
+
+  .header {
+    padding: calc(env(safe-area-inset-top) + 16px) 18px 14px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--bg2);
+    border-bottom: 1.5px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px 4px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--text3);
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+  }
+
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--bg);
+  }
+
+  .now-banner {
+    padding: 10px 18px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .now-label {
+    font-size: 12px;
+    color: var(--text3);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .now-time {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .next-ferry {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .next-ferry .label {
+    font-size: 11px;
+    color: var(--text3);
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  .next-ferry .time {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--bg);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--bg3);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+
+  thead th:not(:first-child) { text-align: center; }
+
+  tbody tr { border-bottom: 1px solid var(--border); }
+
+  tbody td {
+    padding: 14px 10px;
+    font-size: 17px;
+    color: var(--text2);
+    text-align: center;
+  }
+
+  tbody td:first-child {
+    text-align: left;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    padding-left: 14px;
+  }
+
+  tbody td.dest {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  tbody td.wait {
+    font-size: 14px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+
+  tbody tr.good { background: var(--green-bg); }
+
+  tbody tr.good td { color: var(--green-text); }
+
+  tbody tr.good td:first-child {
+    border-left: 4px solid var(--green);
+    padding-left: 10px;
+    font-weight: 700;
+  }
+
+  tbody tr.good td.wait {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  tbody tr.next-up { background: var(--next-bg); }
+
+  tbody tr.next-up td { color: var(--next-text); }
+
+  tbody tr.next-up td:first-child {
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    color: var(--next-text);
+    font-weight: 700;
+  }
+
+  tbody tr.next-up td.wait {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  tbody tr.next-up.good td { color: var(--green-text); }
+
+  tbody tr.next-up.good td:first-child {
+    border-left: 4px solid var(--green);
+    color: var(--green-text);
+  }
+
+  tbody tr.none-row td {
+    color: var(--text3);
+    font-size: 14px;
+    font-style: italic;
+    text-align: left;
+    padding-left: 14px;
+  }
+
+  tbody tr.none-row td:first-child {
+    color: var(--text2);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+  }
+
+  .star {
+    font-size: 10px;
+    color: var(--text3);
+    vertical-align: super;
+    margin-left: 1px;
+    font-weight: 400;
+  }
+
+  .legend {
+    padding: 10px 18px;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+
+  .legend-swatch {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .swatch-green { background: var(--green-bg); border-left: 4px solid var(--green); }
+  .swatch-blue  { background: var(--next-bg);  border-left: 4px solid var(--accent); }
+
+  .footer-note {
+    padding: 6px 18px calc(env(safe-area-inset-bottom) + 6px);
+    font-size: 10px;
+    color: var(--text3);
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-title">Fähre → Setúbal</div>
+    <div class="header-sub">Terreiro do Paço → Praça do Quebedo</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('du',this)">Dias úteis</button>
+    <button class="tab" onclick="switchTab('sa',this)">Sábados</button>
+    <button class="tab" onclick="switchTab('do',this)">Dom / Fer.</button>
+  </div>
+
+  <div class="now-banner">
+    <span class="now-label">Jetzt</span>
+    <span class="now-time" id="clock">--:--</span>
+    <div class="next-ferry">
+      <span class="label">nächste Fähre</span>
+      <span class="time" id="next-time">—</span>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+    <div id="tab-du">
+      <table><thead><tr><th>Fähre TdP</th><th>Zug Barreiro</th><th>Quebedo</th><th>Warten</th></tr></thead>
+      <tbody id="tbody-du"></tbody></table>
+    </div>
+    <div id="tab-sa" style="display:none">
+      <table><thead><tr><th>Fähre TdP</th><th>Zug Barreiro</th><th>Quebedo</th><th>Warten</th></tr></thead>
+      <tbody id="tbody-sa"></tbody></table>
+    </div>
+    <div id="tab-do" style="display:none">
+      <table><thead><tr><th>Fähre TdP</th><th>Zug Barreiro</th><th>Quebedo</th><th>Warten</th></tr></thead>
+      <tbody id="tbody-do"></tbody></table>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch swatch-green"></div>Direktanschluss (~5 min)</div>
+    <div class="legend-item"><div class="legend-swatch swatch-blue"></div>Nächste Verbindung</div>
+  </div>
+
+  <div class="footer-note">✶ Fähre 25 min · Zug Barreiro→Quebedo 32 min · Gültig ab 15. Dez 2024</div>
+
+</div>
+<script>
+const DATA = {
+  du: [
+    [0,0,false,null,null,null,null,0,false],
+    [0,30,false,null,null,null,null,0,false],
+    [5,0,false,5,55,6,27,30,true],
+    [5,25,true,5,55,6,27,5,true],
+    [5,55,true,6,25,6,57,5,true],
+    [6,0,false,6,25,6,57,5,true],
+    [6,25,true,6,55,7,27,5,true],
+    [6,35,false,7,25,7,57,30,false],
+    [7,0,false,7,25,7,57,5,true],
+    [7,25,true,7,55,8,27,5,true],
+    [7,40,false,8,25,8,57,25,false],
+    [8,0,true,8,25,8,57,5,true],
+    [8,10,false,8,55,9,27,25,false],
+    [8,25,true,8,55,9,27,5,true],
+    [9,0,false,9,25,9,57,5,true],
+    [9,25,true,9,55,10,27,5,true],
+    [10,0,false,10,25,10,57,5,true],
+    [10,25,true,10,55,11,27,5,true],
+    [11,0,false,11,25,11,57,5,true],
+    [11,25,true,11,55,12,27,5,true],
+    [12,0,false,12,25,12,57,5,true],
+    [12,25,true,12,55,13,27,5,true],
+    [13,0,false,13,25,13,57,5,true],
+    [13,25,true,13,55,14,27,5,true],
+    [14,0,false,14,25,14,57,5,true],
+    [14,25,true,14,55,15,27,5,true],
+    [15,0,false,15,25,15,57,5,true],
+    [15,25,true,15,55,16,27,5,true],
+    [16,0,false,16,25,16,57,5,true],
+    [16,25,true,16,55,17,27,5,true],
+    [17,0,false,17,25,17,57,5,true],
+    [17,25,true,17,55,18,27,5,true],
+    [18,0,false,18,25,18,57,5,true],
+    [18,25,true,18,55,19,27,5,true],
+    [19,0,false,19,25,19,57,5,true],
+    [19,25,true,19,55,20,27,5,true],
+    [20,0,false,20,25,20,57,5,true],
+    [20,25,true,20,55,21,27,5,true],
+    [21,0,false,21,25,21,57,5,true],
+    [21,25,true,21,55,22,27,5,true],
+    [22,0,false,22,25,22,57,5,true],
+    [22,30,false,22,55,23,27,5,true],
+    [23,5,false,null,null,null,null,0,false],
+  ],
+  sa: [
+    [0,0,true,null,null,null,null,0,false],
+    [0,30,false,null,null,null,null,0,false],
+    [5,15,true,6,25,6,57,45,false],
+    [6,15,false,7,25,7,57,40,false],
+    [7,25,true,8,25,8,57,35,false],
+    [7,55,true,8,25,8,57,5,true],
+    [8,25,true,9,25,9,57,35,false],
+    [8,55,true,9,25,9,57,5,true],
+    [9,25,true,10,25,10,57,35,false],
+    [9,55,true,10,25,10,57,5,true],
+    [10,25,true,11,25,11,57,35,false],
+    [10,55,true,11,25,11,57,5,true],
+    [11,25,true,12,25,12,57,35,false],
+    [11,55,true,12,25,12,57,5,true],
+    [12,25,true,13,25,13,57,35,false],
+    [12,55,true,13,25,13,57,5,true],
+    [13,25,true,14,25,14,57,35,false],
+    [13,55,true,14,25,14,57,5,true],
+    [14,25,true,15,25,15,57,35,false],
+    [14,55,true,15,25,15,57,5,true],
+    [15,25,true,16,25,16,57,35,false],
+    [15,55,true,16,25,16,57,5,true],
+    [16,25,true,17,25,17,57,35,false],
+    [16,55,true,17,25,17,57,5,true],
+    [17,25,true,18,25,18,57,35,false],
+    [17,55,true,18,25,18,57,5,true],
+    [18,25,true,19,25,19,57,35,false],
+    [18,55,true,19,25,19,57,5,true],
+    [19,25,true,20,25,20,57,35,false],
+    [19,55,true,20,25,20,57,5,true],
+    [20,25,true,21,25,21,57,35,false],
+    [20,55,true,21,25,21,57,5,true],
+    [21,25,true,22,25,22,57,35,false],
+    [21,55,true,22,25,22,57,5,true],
+    [22,25,true,23,25,null,null,0,false],
+  ],
+};
+DATA.do = DATA.sa;
+
+function fmt(h,m){ return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
+function toMins(h,m){ return h*60+m; }
+
+function buildTable(id, rows){
+  const tbody = document.getElementById('tbody-'+id);
+  rows.forEach(r => {
+    const [fH,fM,star,tH,tM,dH,dM,wait,good] = r;
+    const tr = document.createElement('tr');
+    if(tH===null){
+      tr.className='none-row';
+      tr.innerHTML=`<td>${fmt(fH,fM)}${star?'<span class="star">✶</span>':''}</td><td colspan="3">kein Anschluss</td>`;
+    } else {
+      tr.className = good?'good':'';
+      tr.dataset.ferryMins = toMins(fH,fM);
+      const waitStr = wait<=5 ? '~5 min' : '~'+wait+' min';
+      tr.innerHTML=`
+        <td>${fmt(fH,fM)}${star?'<span class="star">✶</span>':''}</td>
+        <td>${fmt(tH,tM)}</td>
+        <td class="dest">${dH!==null?fmt(dH,dM):'—'}</td>
+        <td class="wait">${waitStr}</td>`;
+    }
+    tbody.appendChild(tr);
+  });
+}
+
+buildTable('du', DATA.du);
+buildTable('sa', DATA.sa);
+buildTable('do', DATA.do);
+
+let currentTab = 'du';
+
+function switchTab(id, btn){
+  currentTab = id;
+  ['du','sa','do'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===id?'block':'none';
+  });
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateNext();
+  setTimeout(scrollToNext, 100);
+}
+
+function updateClock(){
+  const now = new Date();
+  document.getElementById('clock').textContent = fmt(now.getHours(), now.getMinutes());
+  updateNext();
+}
+
+function updateNext(){
+  const now = new Date();
+  const nowMins = now.getHours()*60 + now.getMinutes();
+  const next = DATA[currentTab].find(r => toMins(r[0],r[1]) > nowMins);
+  document.getElementById('next-time').textContent = next ? fmt(next[0],next[1])+(next[2]?'✶':'') : '—';
+  document.querySelectorAll('tr.next-up').forEach(tr => tr.classList.remove('next-up'));
+  const trs = document.querySelectorAll('#tbody-'+currentTab+' tr[data-ferry-mins]');
+  for(const tr of trs){
+    if(parseInt(tr.dataset.ferryMins) > nowMins){ tr.classList.add('next-up'); break; }
+  }
+}
+
+function scrollToNext(){
+  const el = document.querySelector('#tab-'+currentTab+' tr.next-up');
+  if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+updateClock();
+setInterval(updateClock, 30000);
+setTimeout(scrollToNext, 200);
+</script>
+</body>
+</html>
