@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Fähre → Setúbal">
-<meta name="theme-color" content="#ffffff">
-<link rel="apple-touch-icon" href="icon.svg">
-<link rel="icon" href="icon.svg">  
-<title>Fähre → Setúbal</title>
+<meta name="apple-mobile-web-app-title" content="LIS-STBL">
+<meta name="theme-color" content="#326891">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='512' height='512' rx='112' fill='%23326891'/%3E%3Cpath d='M0 360 Q64 336 128 360 Q192 384 256 360 Q320 336 384 360 Q448 384 512 360 L512 512 L0 512 Z' fill='%231e5a7a'/%3E%3Cpath d='M0 400 Q64 376 128 400 Q192 424 256 400 Q320 376 384 400 Q448 424 512 400 L512 512 L0 512 Z' fill='%23164868'/%3E%3Cpath d='M80 320 L100 380 Q256 410 412 380 L432 320 Z' fill='%23ffffff'/%3E%3Crect x='110' y='240' width='292' height='84' rx='6' fill='%23e8f4fb'/%3E%3Crect x='160' y='170' width='192' height='74' rx='8' fill='%23ffffff'/%3E%3Crect x='178' y='185' width='28' height='22' rx='4' fill='%23326891'/%3E%3Crect x='218' y='185' width='28' height='22' rx='4' fill='%23326891'/%3E%3Crect x='258' y='185' width='28' height='22' rx='4' fill='%23326891'/%3E%3Crect x='298' y='185' width='28' height='22' rx='4' fill='%23326891'/%3E%3Crect x='128' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='174' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='220' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='266' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='312' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='358' y='256' width='32' height='24' rx='4' fill='%23326891'/%3E%3Crect x='228' y='120' width='36' height='56' rx='6' fill='%23ffffff'/%3E%3Crect x='222' y='110' width='48' height='18' rx='4' fill='%23e0e0e0'/%3E%3Ccircle cx='246' cy='96' r='10' fill='rgba(255,255,255,0.4)'/%3E%3Ccircle cx='256' cy='84' r='8' fill='rgba(255,255,255,0.3)'/%3E%3Cline x1='256' y1='108' x2='256' y2='60' stroke='%23ffffff' stroke-width='4'/%3E%3Cline x1='256' y1='75' x2='220' y2='90' stroke='%23ffffff' stroke-width='2.5'/%3E%3Cline x1='256' y1='75' x2='292' y2='90' stroke='%23ffffff' stroke-width='2.5'/%3E%3Cpolygon points='256,60 286,68 256,76' fill='%23e74c3c'/%3E%3Ctext x='256' y='472' text-anchor='middle' font-family='Helvetica Neue,Arial,sans-serif' font-size='52' font-weight='800' fill='%23ffffff' letter-spacing='2'%3ELIS-STBL%3C/text%3E%3C/svg%3E">
+<title>LIS-STBL</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -192,15 +191,12 @@
   }
 
   tbody tr.good { background: var(--green-bg); }
-
   tbody tr.good td { color: var(--green-text); }
-
   tbody tr.good td:first-child {
     border-left: 4px solid var(--green);
     padding-left: 10px;
     font-weight: 700;
   }
-
   tbody tr.good td.wait {
     color: var(--green);
     font-weight: 700;
@@ -208,23 +204,18 @@
   }
 
   tbody tr.next-up { background: var(--next-bg); }
-
   tbody tr.next-up td { color: var(--next-text); }
-
   tbody tr.next-up td:first-child {
     border-left: 4px solid var(--accent);
     padding-left: 10px;
     color: var(--next-text);
     font-weight: 700;
   }
-
   tbody tr.next-up td.wait {
     color: var(--accent);
     font-weight: 700;
   }
-
   tbody tr.next-up.good td { color: var(--green-text); }
-
   tbody tr.next-up.good td:first-child {
     border-left: 4px solid var(--green);
     color: var(--green-text);
@@ -237,7 +228,6 @@
     text-align: left;
     padding-left: 14px;
   }
-
   tbody tr.none-row td:first-child {
     color: var(--text2);
     font-style: normal;
@@ -272,12 +262,7 @@
     font-weight: 500;
   }
 
-  .legend-swatch {
-    width: 14px; height: 14px;
-    border-radius: 3px;
-    flex-shrink: 0;
-  }
-
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
   .swatch-green { background: var(--green-bg); border-left: 4px solid var(--green); }
   .swatch-blue  { background: var(--next-bg);  border-left: 4px solid var(--accent); }
 
