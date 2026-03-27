@@ -1,0 +1,28 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#326891"/>
+  <path d="M0 360 Q64 336 128 360 Q192 384 256 360 Q320 336 384 360 Q448 384 512 360 L512 512 L0 512 Z" fill="#1e5a7a"/>
+  <path d="M0 400 Q64 376 128 400 Q192 424 256 400 Q320 376 384 400 Q448 424 512 400 L512 512 L0 512 Z" fill="#164868"/>
+  <path d="M80 320 L100 380 Q256 410 412 380 L432 320 Z" fill="#ffffff"/>
+  <rect x="110" y="240" width="292" height="84" rx="6" fill="#e8f4fb"/>
+  <rect x="160" y="170" width="192" height="74" rx="8" fill="#ffffff"/>
+  <rect x="178" y="185" width="28" height="22" rx="4" fill="#326891"/>
+  <rect x="218" y="185" width="28" height="22" rx="4" fill="#326891"/>
+  <rect x="258" y="185" width="28" height="22" rx="4" fill="#326891"/>
+  <rect x="298" y="185" width="28" height="22" rx="4" fill="#326891"/>
+  <rect x="128" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="174" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="220" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="266" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="312" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="358" y="256" width="32" height="24" rx="4" fill="#326891"/>
+  <rect x="228" y="120" width="36" height="56" rx="6" fill="#ffffff"/>
+  <rect x="222" y="110" width="48" height="18" rx="4" fill="#e0e0e0"/>
+  <circle cx="246" cy="96" r="10" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="256" cy="84" r="8" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="264" cy="74" r="6" fill="rgba(255,255,255,0.2)"/>
+  <line x1="256" y1="108" x2="256" y2="60" stroke="#ffffff" stroke-width="4"/>
+  <line x1="256" y1="75" x2="220" y2="90" stroke="#ffffff" stroke-width="2.5"/>
+  <line x1="256" y1="75" x2="292" y2="90" stroke="#ffffff" stroke-width="2.5"/>
+  <polygon points="256,60 286,68 256,76" fill="#e74c3c"/>
+  <text x="256" y="472" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="800" fill="#ffffff" letter-spacing="2">LIS-STBL</text>
+</svg>
